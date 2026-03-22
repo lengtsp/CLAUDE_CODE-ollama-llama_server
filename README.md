@@ -1,3 +1,5 @@
+<p align="center"><b><span style="color: red; font-size: 1.5em;">ฉันตัด internet แล้ว แต่ก็ยังรัน claude code local llm ได้นะ</span></b></p>
+
 # Claude Code + Local LLM
 
 > Run **[Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code)** with fully local models — via **Ollama** or **llama-server** (llama.cpp). No API cost, no internet required.
@@ -29,12 +31,7 @@ By default, Claude Code connects to Anthropic's cloud API (requires a paid API k
 
 Claude Code speaks Anthropic's API format. Local models (Ollama, llama-server) speak OpenAI's API format. **[LiteLLM](https://github.com/BerriAI/litellm)** sits in the middle and translates between them:
 
-```
-┌─────────────┐  Anthropic format  ┌─────────────┐  OpenAI format  ┌──────────────────┐
-│ Claude Code │ ─────────────────▶ │   LiteLLM   │ ─────────────▶ │  Ollama          │
-│ (CLI)       │ ◀───────────────── │   Proxy     │ ◀───────────── │  or llama-server │
-└─────────────┘                    └─────────────┘                 └──────────────────┘
-```
+![Workflow](image/workflow.png)
 
 A single **`.env`** file controls which backend to use, model settings, and inference preset. The wrapper script `claude_ollama.sh` auto-starts LiteLLM, connects everything, and cleans up on exit — **one command to launch**.
 
@@ -528,6 +525,30 @@ cat /tmp/litellm.log
 - Env vars are scoped to the `claude_ollama.sh` process only — other terminals are unaffected
 - Preset parameters (`temperature`, `top_p`, `presence_penalty`, `extra_body`) are injected per-model in the generated config
 - `merge_reasoning_content_in_choices: true` — ensures thinking model reasoning is merged into content
+
+---
+
+## Screenshots
+
+### Launching Claude Code with local LLM
+
+![Launch command](image/Screenshot%202026-03-22%20194114.png)
+
+![Claude Code started with llama-server backend](image/Screenshot%202026-03-22%20194132.png)
+
+### Basic usage — local model responding
+
+![1+1 test](image/Screenshot%202026-03-22%20194331.png)
+
+### Vision/OCR — reading Thai PDF document
+
+![OCR reading Thai PDF](image/Screenshot%202026-03-22%20194456.png)
+
+### Summarizing document content
+
+![PDF summary part 1](image/Screenshot%202026-03-22%20194745.png)
+
+![PDF summary part 2](image/Screenshot%202026-03-22%20194855.png)
 
 ---
 
